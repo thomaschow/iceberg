@@ -34,6 +34,10 @@ public class GCPProperties implements Serializable {
   public static final String GCS_CLIENT_LIB_TOKEN = "gcs.client-lib-token";
   public static final String GCS_SERVICE_HOST = "gcs.service.host";
 
+  // BigTable Configuration Properties
+  public static final String BIGTABLE_PROJECT_ID = "bigtable.project-id";
+  public static final String BIGTABLE_INSTANCE_ID = "bigtable.instance-id";
+
   // GCS Configuration Properties
   public static final String GCS_DECRYPTION_KEY = "gcs.decryption-key";
   public static final String GCS_ENCRYPTION_KEY = "gcs.encryption-key";
@@ -68,6 +72,9 @@ public class GCPProperties implements Serializable {
   private String clientLibToken;
   private String serviceHost;
 
+  private String bigtableProjectId;
+  private String bigtableInstanceId;
+
   private String gcsDecryptionKey;
   private String gcsEncryptionKey;
   private String gcsUserProject;
@@ -93,6 +100,9 @@ public class GCPProperties implements Serializable {
     projectId = properties.get(GCS_PROJECT_ID);
     clientLibToken = properties.get(GCS_CLIENT_LIB_TOKEN);
     serviceHost = properties.get(GCS_SERVICE_HOST);
+
+    bigtableProjectId = properties.get(BIGTABLE_PROJECT_ID);
+    bigtableInstanceId = properties.get(BIGTABLE_INSTANCE_ID);
 
     gcsDecryptionKey = properties.get(GCS_DECRYPTION_KEY);
     gcsEncryptionKey = properties.get(GCS_ENCRYPTION_KEY);
@@ -184,6 +194,14 @@ public class GCPProperties implements Serializable {
 
   public boolean oauth2RefreshCredentialsEnabled() {
     return gcsOauth2RefreshCredentialsEnabled;
+  }
+
+  public Optional<String> bigtableProjectId() {
+    return Optional.ofNullable(bigtableProjectId);
+  }
+
+  public Optional<String> bigtableInstanceId() {
+    return Optional.ofNullable(bigtableInstanceId);
   }
 
   public Map<String, String> properties() {

@@ -715,8 +715,16 @@ project(':iceberg-gcp') {
     compileOnly platform(libs.google.libraries.bom)
     compileOnly "com.google.cloud:google-cloud-storage"
     compileOnly "com.google.cloud:google-cloud-kms"
+    compileOnly "com.google.cloud:google-cloud-bigtable"
+    compileOnly(libs.hadoop3.common) {
+      exclude group: 'org.apache.avro', module: 'avro'
+      exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+      exclude group: 'javax.servlet', module: 'servlet-api'
+      exclude group: 'com.google.code.gson', module: 'gson'
+    }
 
     testImplementation "com.google.cloud:google-cloud-nio"
+    testCompileOnly "com.google.cloud:google-cloud-bigtable"
 
     testImplementation project(path: ':iceberg-api', configuration: 'testArtifacts')
     testImplementation project(path: ':iceberg-core', configuration: 'testArtifacts')
@@ -747,6 +755,9 @@ project(':iceberg-gcp') {
     integrationRuntime.extendsFrom testRuntimeOnly
   }
 
+  dependencies {
+    integrationCompileOnly "com.google.cloud:google-cloud-bigtable"
+  }
   task integrationTest(type: Test) {
     useJUnitPlatform()
     testClassesDirs = sourceSets.integration.output.classesDirs
